@@ -45,4 +45,7 @@ SELECT u.id, p.titulo, p.contenido FROM post AS p JOIN usuarios AS u ON p.usuari
 
 -- 4. Cuenta la cantidad de posts de cada usuario. La tabla resultante debe mostrar el id e email del usuario junto con la cantidad de posts de cada usuario.
 
+SELECT u.id, u.email, count(p.usuario_id) AS cantidad FROM usuarios u LEFT JOIN post p ON u.id = p.usuario_id  GROUP BY p.usuario_id , u.id, u.email;
+
+
 
