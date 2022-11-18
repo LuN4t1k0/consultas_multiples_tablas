@@ -35,3 +35,14 @@ insert into comentarios (contenido, fecha_creacion, usuario_id, post_id) values 
 insert into comentarios (contenido, fecha_creacion, usuario_id, post_id) values ('In congue. Etiam justo. Etiam pretium iaculis justo.', '2022-04-03', 1, 2);
 insert into comentarios (contenido, fecha_creacion, usuario_id, post_id) values ('Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.', '2021-11-20', 2, 2);
 
+-- 2. Cruza los datos de la tabla usuarios y posts mostrando las siguientes columnas. nombre e email del usuario junto al título y contenido del post.
+
+SELECT u.nombre, u.email, p.titulo, p.contenido FROM usuarios AS u JOIN post AS p ON u.id = p.usuario_id;
+
+-- 3. Muestra el id, título y contenido de los posts de los administradores. El administrador puede ser cualquier id y debe ser seleccionado dinámicamente.
+
+SELECT u.id, p.titulo, p.contenido FROM post AS p JOIN usuarios AS u ON p.usuario_id = u.id WHERE u.rol = 'Administrador';
+
+-- 4. Cuenta la cantidad de posts de cada usuario. La tabla resultante debe mostrar el id e email del usuario junto con la cantidad de posts de cada usuario.
+
+
