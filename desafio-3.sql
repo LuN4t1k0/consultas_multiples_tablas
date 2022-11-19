@@ -1,5 +1,5 @@
--- Author : Cristian Venegas 
--- Desafio N3 Consultas multi tablas 
+-- Author : Cristian VenegAS 
+-- Desafio N3 ConsultAS multi tablAS 
 --crear Base de datos 
 CREATE DATABASE desafio3_Cristian_Venegas_245;
 
@@ -125,7 +125,7 @@ insert into
 values
   (
     'Legend of Leigh Bowery, The',
-    'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.',
+    'MaecenAS leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. CrAS pellentesque volutpat dui.',
     '2022-10-25',
     '10-31-2022',
     false,
@@ -220,13 +220,13 @@ insert into
   comentarios (contenido, fecha_creacion, usuario_id, post_id)
 values
   (
-    'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.',
+    'Pellentesque at nulla. Suspendisse potenti. CrAS in purus eu magna vulputate luctus.',
     '2021-11-20',
     2,
     2
   );
 
--- 2. Cruza los datos de la tabla usuarios y posts mostrando las siguientes columnas. nombre e email del usuario junto al título y contenido del post.
+-- 2. Cruza los datos de la tabla usuarios y posts mostrando lAS siguientes columnas. nombre e email del usuario junto al título y contenido del post.
 SELECT
   u.nombre,
   u.email,
@@ -263,12 +263,12 @@ GROUP BY
 -- 5. Muestra el email del usuario que ha creado más posts. Aquí la tabla resultante tiene un único registro y muestra solo el email.
 select
   email
-from
+FROM
   usuarios
-  join post on usuarios.id = post.usuario_id
-GROUP by
+  JOIN post ON usuarios.id = post.usuario_id
+GROUP BY
   usuarios.email
-order by
+ORDER BY
   count(post.id) DESC
 limit
   1;
@@ -278,40 +278,53 @@ limit
 select
   usuarios.nombre,
   max(post.fecha_creacion)
-from
+FROM
   usuarios
-  LEFT JOIN post on post.usuario_id = usuarios.id
-GROUP by
+  LEFT JOIN post ON post.usuario_id = usuarios.id
+GROUP BY
   usuarios.nombre;
 
 -- 6.2 esta version mestra solo la fecha de creacion de aquellos usuarios que tienen post
 select
   usuarios.nombre,
   max(post.fecha_creacion)
-from
+FROM
   usuarios
-  JOIN post on post.usuario_id = usuarios.id
-GROUP by
+  JOIN post ON post.usuario_id = usuarios.id
+GROUP BY
   usuarios.nombre;
 
--- 7 Muestra el título y contenido del post (artículo) con más comentarios
+-- 7. Muestra el título y contenido del post (artículo) con más comentarios
 SELECT
   post.titulo,
   post.contenido
-from
+FROM
   post
-  join (
+  JOIN (
     SELECT
       post_id,
-      COUNT(comentarios.post_id) as total
-    from
+      COUNT(comentarios.post_id) AS total
+    FROM
       comentarios
-    GROUP by
+    GROUP BY
       comentarios.post_id
-    ORder by
+    ORDER BY
       total DESC
     LIMIT
       1
-  ) as tabla on post.id = tabla.post_id;
+  ) AS tabla ON post.id = tabla.post_id;
 
-  
+-- 8. Muestra en una tabla el título de cada post, el contenido de cada post y el contenido de cada comentario asociado a los posts mostrados, junto con el email del usuario que lo escribió.
+SELECT
+  p.titulo,
+  p.contenido,
+  c.contenido,
+  u.email
+FROM
+  comentarios AS c
+  JOIN post AS p ON c.post_id = p.id
+  JOIN usuarios AS u ON u.id = c.usuario_id
+ORDER BY
+  p.id;
+
+-- Muestra el contenido del último comentario de cada usuario
