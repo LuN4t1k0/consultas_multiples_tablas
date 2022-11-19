@@ -294,5 +294,24 @@ from
 GROUP by
   usuarios.nombre;
 
-
 -- 7 Muestra el título y contenido del post (artículo) con más comentarios
+SELECT
+  post.titulo,
+  post.contenido
+from
+  post
+  join (
+    SELECT
+      post_id,
+      COUNT(comentarios.post_id) as total
+    from
+      comentarios
+    GROUP by
+      comentarios.post_id
+    ORder by
+      total DESC
+    LIMIT
+      1
+  ) as tabla on post.id = tabla.post_id;
+
+  
