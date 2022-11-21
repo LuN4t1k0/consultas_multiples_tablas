@@ -327,4 +327,31 @@ FROM
 ORDER BY
   p.id;
 
--- Muestra el contenido del último comentario de cada usuario
+-- 9.  Muestra el contenido del último comentario de cada usuario
+SELECT
+  comentarios.usuario_id as user,
+  comentarios.fecha_creacion,
+  comentarios.contenido
+FROM
+  comentarios
+  JOIN (
+    SELECT
+      max(comentarios.id) AS filtro_id
+    FROM
+      comentarios
+    GROUP BY
+      usuario_id
+  ) AS max_total ON comentarios.id = max_total.filtro_id
+ORDER BY
+  comentarios.usuario_id;
+
+-- 10. Muestra los emails de los usuarios que no han escrito ningún comentario.
+SELECT
+  usuarios.email
+from
+  usuarios
+  left join comentarios on usuarios.id = comentarios.usuario_id
+group by
+  usuarios.email
+HAVING
+  count(comentarios.id) = 0;
